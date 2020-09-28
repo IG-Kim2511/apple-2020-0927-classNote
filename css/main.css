@@ -5,6 +5,7 @@
 
 html {
   font-family: "Noto Sans KR", sans-serif;
+  /* T: root element 크기 정해둠.  */
   font-size: 14px;
 }
 body {
@@ -152,10 +153,46 @@ airmug pro 혼자 빈 margin 을 전부 씀 */
 
 /* t:  .description 클래스안의 strong 태그 가져옴. 너무 많은 클래스는 헷갈리게 하므로...
 */
+/* T 07-14: rem / em
+
+rem: 1rem = html tag (root tag)의 값
+
+em: 
+1st :  자기tag 기준
+2st : 현재부모tag의 폰트사이즈 기준 
+
+자신의 폰트사이즈가 설정되어있지 않을 경우,
+결국 부모의 폰트 사이즈가 내 폰트사이즈가 되므로
+보통 부모의 폰트 사이즈가 기준이 되는게 맞는데요~
+
+이 경우에는 자기 폰트사이즈가 설정이 되었으므로
+3rem의 0.2배가 된다고 생각하시면 됩니다^^
+
+(1)
+rem (font-size ) : 
+부모 (html) 폰트 사이즈 14px를 기준
+14*2.5
+14*3
+
+(2)
+em (height, margin)  :
+자기태그안(.description strong)의 font-size rem이 기준
+
+그 비율에 맞춰서 코딩하면 더 편해서 이렇게 사용함
+
+14*3*0.2
+
+만약 rem이라면
+
+14*0.2
+*/
 .description strong {
   float: left;
-  margin-right: 0.2em;
+  /* (1) */
   font-size: 3rem;
+  /* (2) */
+  margin-right: 0.2em;
+
   color: rgb(29, 29, 31);
 }
 .desc-message {

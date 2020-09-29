@@ -1,7 +1,7 @@
 @charset 'utf-8';
 /* ● mobile first
 모바일로 코딩 먼저하고, 
-미디어쿼리로 , 컴퓨터 넓이 추가코딩 */
+미디어쿼리로 , desktop 넓이 추가코딩 */
 
 html {
   font-family: "Noto Sans KR", sans-serif;
@@ -105,7 +105,7 @@ airmug pro 혼자 빈 margin 을 전부 씀 */
 }
 .scroll-section {
   position: relative;
-  /* t: 인터넷 브라우저 창의 높이: 100vh */
+  /* t: 인터넷 브라우저 창의 전체 높이: 100vh */
   padding-top: 50vh;
 }
 
@@ -136,6 +136,9 @@ airmug pro 혼자 빈 margin 을 전부 씀 */
   line-height: 1.2;
 }
 .main-message small {
+  /* T: display: block
+The element generates a block element box, generating line breaks both before and after the element when in the normal flow.
+ */
   display: block;
   margin-bottom: 0.5em;
   font-size: 1.2rem;
@@ -197,6 +200,7 @@ em (height, margin)  :
 }
 .desc-message {
   width: 50%;
+  /* t: bold */
   font-weight: bold;
   opacity: 0;
 }
@@ -335,6 +339,10 @@ em (height, margin)  :
 
 @media (min-width: 1024px) {
   #scroll-section-0 h1 {
+    /* T 08-8: 
+vw. vh : 윈도우크기에 따라서 폰트크기도 같이 변함 (윈도우크기 늘렸을때, 폰트크기 커짐)
+윈도우 창 크기의 9%
+*/
     font-size: 9vw;
   }
   .main-message {

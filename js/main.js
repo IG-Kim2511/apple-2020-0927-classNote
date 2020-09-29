@@ -3,7 +3,12 @@
 // 전역변수를 안쓰기위해서 씀
 // 함수안에서 만든 변수...밖에서 쓸수없음
 
+// js 12 : section scroll 알고리즘 :
+// 스크롤한 height 가 (0번section의 height +1번section의 height)의 합보다 길면 2번section에 도달했다고 판단.... 하는 이론으로 코딩함
+
 (() => {
+  //● js 12 -3
+  // yOffset변수를 만들고 상황에 따라서 pageYOffset 쓰거나, 다른것을 사용하기 (나중에 비디오 처리할때 다른 값을 쓸 예정)
   let yOffset = 0; // window.pageYOffset 대신 쓸 변수
   let prevScrollHeight = 0; // 현재 스크롤 위치(yOffset)보다 이전에 위치한 스크롤 섹션들의 스크롤 높이값의 합
   let currentScene = 0; // 현재 활성화된(눈 앞에 보고있는) 씬(scroll-section)
@@ -165,6 +170,7 @@
   //js 11
   // (2) 각 section의 scrollHeight = 설정한 heightNum * 윈도우 창크기. (for로 각각 section돌리면서 scrollHeight 설정)
   // (4) ~~container에 style.height 설정
+  // (5) 윈도우 사이즈 바뀔때 (resize), setLayout실행. : 윈도우크기에따라서 사이즈가 계속 바뀜
 
   function setLayout() {
     // (2)
@@ -182,6 +188,22 @@
       ].objs.container.style.height = `${sceneInfo[i].scrollHeight}px`;
     }
 
+    // (5)
+    // window.addEventListener('resize',setLayout);
+    // setLayout();
+
+    //● js 12.
+    // (1) pageYOffset : 현재 스크롤한 위치확인
+    // function scrollLoop(){
+    //   (1)
+    //   console.log(window.pageYOffset);
+    // }
+
+    // window.addEventListener('scroll',()=>{
+    //   scrollLoop();
+    // });
+
+    // js 12 -3
     yOffset = window.pageYOffset;
 
     let totalScrollHeight = 0;
@@ -619,7 +641,7 @@
         break;
     }
   }
-
+  // js 12
   function scrollLoop() {
     enterNewScene = false;
     prevScrollHeight = 0;

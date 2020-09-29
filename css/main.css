@@ -242,12 +242,17 @@ em (height, margin)  :
   color: white;
   background: darkorange;
 }
+
+/* css 10-06 sticky를 fixed와 js로 구현하기 */
 .sticky-elem {
+  /* css 10-06 */
   display: none;
   position: fixed;
   left: 0;
   width: 100%;
 }
+
+/* css 10-06 : js로 설정된 아이디에 맞춰서 해당 아이디의 sticky-elem이 보여지게함*/
 #show-scene-0 #scroll-section-0 .sticky-elem,
 #show-scene-1 #scroll-section-1 .sticky-elem,
 #show-scene-2 #scroll-section-2 .sticky-elem,

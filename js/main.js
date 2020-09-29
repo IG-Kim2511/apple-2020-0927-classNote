@@ -1,4 +1,8 @@
 // ●
+//● 즉시실행 함수 Immediately-invoked function expression
+// 전역변수를 안쓰기위해서 씀
+// 함수안에서 만든 변수...밖에서 쓸수없음
+
 (() => {
   let yOffset = 0; // window.pageYOffset 대신 쓸 변수
   let prevScrollHeight = 0; // 현재 스크롤 위치(yOffset)보다 이전에 위치한 스크롤 섹션들의 스크롤 높이값의 합
@@ -9,13 +13,19 @@
   let rafId;
   let rafState;
 
+  // ● js 11
+  // (1) 스크롤높이(scrollHeight)는 0으로 넣고, 다른함수에서 설정함 . desktop~phone..기기마다 높이가 달라서. 스크롤높이의 ~~배로 넣을 예정임
+  // (3) section id 가져오고, 그 container에 높이 지정하기
+
   const sceneInfo = [
     {
       // 0
       type: "sticky",
+      // (1)
       heightNum: 5, // 브라우저 높이의 5배로 scrollHeight 세팅
       scrollHeight: 0,
       objs: {
+        // (3)
         container: document.querySelector("#scroll-section-0"),
         messageA: document.querySelector("#scroll-section-0 .main-message.a"),
         messageB: document.querySelector("#scroll-section-0 .main-message.b"),
@@ -152,14 +162,21 @@
     }
   }
 
+  //js 11
+  // (2) 각 section의 scrollHeight = 설정한 heightNum * 윈도우 창크기. (for로 각각 section돌리면서 scrollHeight 설정)
+  // (4) ~~container에 style.height 설정
+
   function setLayout() {
-    // 각 스크롤 섹션의 높이 세팅
+    // (2)
     for (let i = 0; i < sceneInfo.length; i++) {
       if (sceneInfo[i].type === "sticky") {
+        // (2) (3)
         sceneInfo[i].scrollHeight = sceneInfo[i].heightNum * window.innerHeight;
       } else if (sceneInfo[i].type === "normal") {
         sceneInfo[i].scrollHeight = sceneInfo[i].objs.container.offsetHeight;
       }
+      // (4)
+
       sceneInfo[
         i
       ].objs.container.style.height = `${sceneInfo[i].scrollHeight}px`;

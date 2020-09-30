@@ -10,6 +10,7 @@
   //● js 12 -3
   // yOffset변수를 만들고 상황에 따라서 pageYOffset 쓰거나, 다른것을 사용하기 (나중에 비디오 처리할때 다른 값을 쓸 예정)
   let yOffset = 0; // window.pageYOffset 대신 쓸 변수
+  // js 13
   let prevScrollHeight = 0; // 현재 스크롤 위치(yOffset)보다 이전에 위치한 스크롤 섹션들의 스크롤 높이값의 합
   let currentScene = 0; // 현재 활성화된(눈 앞에 보고있는) 씬(scroll-section)
   let enterNewScene = false; // 새로운 scene이 시작된 순간 true
@@ -641,11 +642,45 @@
         break;
     }
   }
-  // js 12
+  // js 12 . js 13
+  // js 13-(2)
+  // currentScene=0 이면  prevScrollHeight 0 + currentScene 0
+  // currentScene=1 ...      prevScrollHeight 0 + currentScene 1  의 scrollHeight 3990= prevHeight이 0에서 3990으로 바뀜
+  // currentScene=2 ...    prevScrollHeight 3990+ currentScene 2의 scrollHeight 3990= prevHeight이 3990에서 3990+3990으로 바뀜
+
+  // 그렇게 하기위해서 스크롤할때마다 체크해서  currentScene 값을 +1 -1 해야함 (스크롤 현재위치에 따라서)
+
+  // js 13-(3)
+  // (a)스크롤 내릴때
+  // yOffset이 prevScrollHeight + currentScene보다 클때, currentScene ++
+
+  // ex) currentScene = 0,
+  // yOffset이 0 scene의 height 3990보다 커지면 currentScene++해서 1
+
+  // currentScene = 1,
+  // yOffset이 1 scene의 height 3990+ prevScrollHeight 3990 보다 커지면 currentScene++해서 2
+
+  // (b)스크롤 올릴때
+  // yOffset이 prevScrollHeight 보다 작을때, currentScene --
+
+  // ex) prevScrollHeight = 3990*3 (currentScene2)
+  // yOffset이  currentScene의 height 3990*3 보다 작아지면 currentScene-- 해서 1
+
+  // yOffset이 prevScrollHeight + CurrentScene보다 클때,
+  // currentScene ++
+
+  // yOffset이 prevScrollHeight + CurrentScene보다 작을때,
+  // currentScene --
+
+  // js 13-(5) B:모바일에서 손가락 스크롤을 할때 상단이 바운스 효과로 메뉴밖으로 나가는 현상이 있음
+  // currentScene이 0만 코딩이 되어있는데바운스 되면서 -1이 되면 에러발생.
+  // 0일때 return해서 그밑의 currentScene--가 실행안되게 함.
+
   function scrollLoop() {
     enterNewScene = false;
     prevScrollHeight = 0;
 
+    // js 13-(2)
     for (let i = 0; i < currentScene; i++) {
       prevScrollHeight += sceneInfo[i].scrollHeight;
     }
@@ -657,6 +692,7 @@
       document.body.classList.remove("scroll-effect-end");
     }
 
+    // js 13-(3)
     if (
       delayedYOffset >
       prevScrollHeight + sceneInfo[currentScene].scrollHeight
@@ -673,7 +709,7 @@
 
     if (delayedYOffset < prevScrollHeight) {
       enterNewScene = true;
-      // 브라우저 바운스 효과로 인해 마이너스가 되는 것을 방지(모바일)
+      //js 13-(5)
       if (currentScene === 0) return;
       currentScene--;
       document.body.setAttribute("id", `show-scene-${currentScene}`);

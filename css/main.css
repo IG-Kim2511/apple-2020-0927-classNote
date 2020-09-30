@@ -36,8 +36,10 @@ body.before-load {
   top: 0;
   left: 0;
   z-index: 10;
+  /* css 13-18 : ??? : absolute에서는 width를 넓혀줘야지 넓어짐.. ?? */
   width: 100%;
   /* css 04-10 */
+  /* css 13-19 */
   height: 44px;
   padding: 0 1rem;
 }
@@ -47,6 +49,7 @@ body.before-load {
   left: 0;
   z-index: 11;
   width: 100%;
+  /* css 13-19 :globla-nav와 겹치지 않게.. global-nav.height참고해서 그밑으로 위치하게함 */
   height: 52px;
   padding: 0 1rem;
   border-bottom: 1px solid #ddd;
